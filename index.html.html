@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Diary ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+:root{--bg:#101116;--panel:#171820;--panel2:#1d1d26;--line:#2c2b35;--gold:#efb16f;--gold2:#d58c61;--muted:#a9a0a5;--paper:#f0d4ad;--ink:#30211f;--plum:#66505f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 110%,#33221f 0%,#15151d 45%,#101116 80%);color:#f5e4d2;font-family:'DM Sans',sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid #292832;background:#12131aee;position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:14px}.brand-icon{font-size:39px;filter:drop-shadow(0 4px 0 #57382c)}.brand h1{font:600 29px 'Caveat',cursive;margin:0;letter-spacing:.3px}.brand p{margin:1px 0 0;font:18px 'Caveat',cursive;color:#d7bba7}.top-actions{display:flex;gap:12px}.icon-btn{border:0;background:transparent;color:#e5c5ad;font-size:22px;padding:9px;border-radius:12px}.icon-btn:hover{background:#282630}
+.layout{display:grid;grid-template-columns:210px minmax(430px,1fr) 315px;gap:20px;padding:24px;max-width:1600px;margin:auto}
+.sidebar{padding:10px 0;display:flex;flex-direction:column;gap:7px}.nav-btn{border:0;background:transparent;color:#c8b7b0;text-align:left;padding:13px 15px;border-radius:14px;font-size:15px;display:flex;gap:14px;align-items:center}.nav-btn .nav-icon{font-size:21px;width:23px;text-align:center}.nav-btn:hover,.nav-btn.active{background:linear-gradient(100deg,#3b2b27,#2b2428);color:var(--gold)}.side-note{font:22px/1.25 'Caveat',cursive;color:#c88c6b;margin:42px 28px 0;transform:rotate(-3deg)}.cat{font-size:80px;margin-top:auto;text-align:center;filter:drop-shadow(0 10px 8px #0008)}
+.main{min-width:0}.date-heading{display:flex;align-items:center;gap:10px;color:#e4cdbd;font-size:18px;margin:8px 0 22px}.date-heading span{font-size:23px}.date-heading input{background:transparent;border:0;color:#e4cdbd;font:inherit;color-scheme:dark}
+.book{display:grid;grid-template-columns:1fr 1fr;min-height:690px;filter:drop-shadow(0 20px 22px #0008);perspective:1200px}
+.page{position:relative;padding:36px 32px 25px;background:linear-gradient(100deg,#e4bd91,#f3d9b3 12%,#f1d5ad 90%,#d9b18a);color:var(--ink);min-width:0;box-shadow:inset 0 0 0 5px #5b382d,inset 0 0 0 8px #9a6747,inset 0 0 15px #875b3b66}
+.page.left{border-radius:36px 8px 8px 30px;margin:0 -1px 0 0;padding-right:29px}.page.left:after{content:"";position:absolute;right:0;top:10px;bottom:10px;width:14px;background:linear-gradient(90deg,#9b6846aa,transparent);pointer-events:none}.page.right{border-radius:8px 36px 30px 8px;background:radial-gradient(ellipse at 50% 65%,#2e2232,#17151f 75%);color:#f2d4b1;box-shadow:inset 0 0 0 5px #4e3028,inset 0 0 0 8px #805438,inset 0 0 18px #000;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.page.left h2{font:italic 500 31px 'Playfair Display',serif;margin:12px 0 8px}.heart{color:#835b53}.rule{height:1px;background:#9e765c;margin:12px 0 20px}
+#entryTitle{width:100%;border:0;outline:0;background:transparent;color:#38221f;font:600 24px 'Caveat',cursive;padding:2px 0;margin:4px 0 14px}
+#entryText{width:100%;min-height:335px;resize:vertical;border:0;outline:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,#b8957666 32px,#b8957666 33px);color:#553c34;font:21px/33px 'Caveat',cursive;padding:0 2px}
+.mood-row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}.mood-btn{background:transparent;border:1px solid #b48d6c;border-radius:20px;padding:5px 9px;font-size:18px}.mood-btn.selected{background:#d2a27e;border-color:#7b5145}
+.page-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:17px}.tools{display:flex;gap:7px}.tool-btn{background:transparent;border:0;color:#38221f;font-size:23px;padding:5px}.save-btn{background:linear-gradient(135deg,#755766,#513c4b);border:0;color:#fff0df;border-radius:15px;padding:12px 18px;font:19px 'Caveat',cursive;box-shadow:0 4px 0 #3a2835}.save-btn:hover{transform:translateY(-1px)}
+.quote{font:italic 34px/1.1 'Caveat',cursive;color:#e7a574;max-width:250px;transform:rotate(-4deg);z-index:1}.quote-heart{font-size:24px;color:#d99b72;margin:14px}.night-window{position:absolute;bottom:100px;width:76%;height:240px;border:8px solid #3c2931;border-bottom-width:13px;border-radius:100px 100px 4px 4px;background:linear-gradient(#19162e,#49304b 68%,#1a1929);box-shadow:0 0 0 3px #8a593d;overflow:hidden}.moon{font-size:58px;color:#f4bd70;position:absolute;top:45px;left:25%;filter:drop-shadow(0 0 14px #f6b65b77)}.star{position:absolute;color:#eeb16b}.star.s1{top:35px;right:23%;font-size:19px}.star.s2{top:110px;left:15%;font-size:22px}.city{position:absolute;bottom:15px;left:0;right:0;height:80px;background:linear-gradient(transparent 0 25%,#161524 25%);clip-path:polygon(0 40%,10% 40%,10% 20%,20% 20%,20% 50%,35% 50%,35% 0,47% 0,47% 42%,58% 42%,58% 15%,72% 15%,72% 35%,85% 35%,85% 5%,100% 5%,100% 100%,0 100%)}.desk-items{position:absolute;bottom:24px;left:0;right:0;display:flex;justify-content:space-around;align-items:end;font-size:40px;z-index:2}.right-caption{font:19px 'Caveat',cursive;color:#bc8b6e;position:absolute;bottom:18px}
+.rightbar{display:flex;flex-direction:column;gap:16px;min-width:0}.widget{background:linear-gradient(145deg,#191a23,#14151c);border:1px solid #292832;border-radius:18px;padding:18px;box-shadow:0 10px 25px #0002}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.calendar-head strong{font-weight:500}.cal-arrow{background:none;border:0;color:#e7c9b3;font-size:24px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.weekday{font-size:12px;color:#b9a7a5;padding:7px 0}.day{border:0;background:transparent;color:#ead8c8;border-radius:50%;aspect-ratio:1;padding:0;font-size:13px;position:relative}.day:hover{background:#3a2c2b}.day.today,.day.selected{background:var(--gold);color:#30201c;font-weight:700}.day.has-entry:after{content:"";width:4px;height:4px;border-radius:50%;background:#d99a70;position:absolute;bottom:2px;left:calc(50% - 2px)}.day.selected:after{background:#49332b}
+.widget-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font-size:15px;color:#f0bd88}.widget-title button{background:none;border:0;color:#d99d70;font-size:12px}.entry-list{display:flex;flex-direction:column}.entry-item{display:flex;gap:10px;align-items:flex-start;padding:12px 2px;border-bottom:1px solid #292832;cursor:pointer}.entry-item:last-child{border-bottom:0}.entry-dot{width:8px;height:8px;background:#c18b7a;border-radius:50%;margin-top:6px;flex-shrink:0}.entry-item strong{font-size:12px;color:#b9a8a6;font-weight:500}.entry-item p{font-size:12px;color:#a79aa0;margin:5px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}.empty-recent{color:#a79aa0;font-size:13px;line-height:1.6}.section-panel{display:none}.section-panel.active{display:block}.list-entry{padding:15px;border:1px solid #302d38;background:#191a22;border-radius:14px;margin-bottom:10px;cursor:pointer}.list-entry h3{font:23px 'Caveat',cursive;margin:0 0 5px;color:#f1c39a}.list-entry p{margin:0;color:#b7a6a5;font-size:13px}.list-actions{display:flex;gap:8px;margin-top:12px}.small-btn{border:1px solid #55414b;background:#29222c;color:#f1d6bf;border-radius:9px;padding:7px 10px;font-size:12px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#f0d4ad;color:#30211f;padding:12px 20px;border-radius:12px;box-shadow:0 10px 30px #0008;display:none;z-index:20}.toast.show{display:block}.hidden{display:none!important}
+@media(max-width:1150px){.layout{grid-template-columns:170px minmax(380px,1fr);}.rightbar{grid-column:2;display:grid;grid-template-columns:1fr 1fr}.book{min-height:630px}.page{padding:27px 25px 20px}.cat{font-size:55px}}
+@media(max-width:760px){.topbar{padding:12px 16px}.layout{display:flex;flex-direction:column;padding:14px}.sidebar{flex-direction:row;overflow-x:auto;padding:0 0 10px}.nav-btn{white-space:nowrap;padding:10px 12px}.nav-btn .nav-icon{width:auto}.side-note,.cat{display:none}.date-heading{margin:5px 0 15px}.book{grid-template-columns:1fr;min-height:0}.page.left{border-radius:24px 24px 7px 7px;margin:0;padding:25px 25px 20px}.page.right{min-height:400px;border-radius:7px 7px 24px 24px}.rightbar{display:flex}.page.left:after{display:none}#entryText{min-height:270px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-icon">📖</div><div><h1>My Diary <span style="color:#c98b70">♥</span></h1><p>Same girl... new pages ♥</p></div></div>
+  <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Change mood">☾</button><button class="icon-btn" id="settingsBtn" title="Diary settings">⚙</button></div>
+</header>
+<div class="layout">
+  <nav class="sidebar">
+    <button class="nav-btn active" data-view="home"><span class="nav-icon">⌂</span>Home</button>
+    <button class="nav-btn" data-view="calendar"><span class="nav-icon">▦</span>Calendar</button>
+    <button class="nav-btn" data-view="entries"><span class="nav-icon">📖</span>My Entries</button>
+    <button class="nav-btn" data-view="memories"><span class="nav-icon">▧</span>Memories</button>
+    <button class="nav-btn" data-view="favorites"><span class="nav-icon">☆</span>Favorites</button>
+    <button class="nav-btn" data-view="trash"><span class="nav-icon">♧</span>Trash</button>
+    <div class="side-note">A little<br>progress<br>each day<br>adds up to<br>big dreams <span>♥</span></div>
+    <div class="cat">🐈‍⬛</div>
+  </nav>
+  <main class="main">
+    <div class="date-heading"><span>▦</span><label for="entryDate" id="dateLabel">Today,</label><input type="date" id="entryDate"></div>
+    <section id="homeView">
+      <div class="book">
+        <div class="page left">
+          <h2 id="pageHeading">Dear Diary... <span class="heart">♥</span></h2>
+          <div class="rule"></div>
+          <input id="entryTitle" maxlength="100" placeholder="Give today a little title...">
+          <textarea id="entryText" placeholder="How was your day?&#10;Write about your thoughts, feelings, or anything you want..."></textarea>
+          <div class="mood-row" aria-label="Choose your mood">
+            <span style="font:18px 'Caveat';margin-right:3px">Today I feel:</span>
+            <button class="mood-btn" data-mood="😊" title="Happy">😊</button><button class="mood-btn" data-mood="🥹" title="Emotional">🥹</button><button class="mood-btn" data-mood="😴" title="Tired">😴</button><button class="mood-btn" data-mood="🤍" title="Peaceful">🤍</button><button class="mood-btn" data-mood="✨" title="Excited">✨</button>
+          </div>
+          <div class="page-footer"><div class="tools"><button class="tool-btn" id="promptBtn" title="Writing prompt">☻</button><button class="tool-btn" id="photoBtn" title="Add a memory photo">▧</button><input type="file" id="photoInput" accept="image/*" class="hidden"><button class="tool-btn" id="favoriteBtn" title="Favorite entry">♡</button></div><button class="save-btn" id="saveBtn">Save Entry ♥</button></div>
+          <div id="photoPreview" class="hidden" style="margin-top:10px;font:16px 'Caveat';"></div>
+        </div>
+        <div class="page right">
+          <div class="quote" id="quoteText">Good things<br>take time</div><div class="quote-heart">♥</div>
+          <div class="night-window"><span class="moon">☾</span><span class="star s1">✦</span><span class="star s2">✦</span><div class="city"></div></div>
+          <div class="desk-items"><span>📚</span><span>☕</span><span>🏮</span></div>
+          <div class="right-caption">a safe place for all your little moments</div>
+        </div>
+      </div>
+    </section>
+    <section id="listView" class="section-panel">
+      <div class="widget" style="margin-bottom:15px"><h2 id="listHeading" style="font:30px 'Caveat';color:#f0bd88;margin:0 0 5px">My Entries</h2><p style="color:#b7a6a5;font-size:13px;margin:0">Every page is a little piece of you.</p></div>
+      <div id="entriesList"></div>
+    </section>
+  </main>
+  <aside class="rightbar">
+    <section class="widget" id="calendarWidget">
+      <div class="calendar-head"><button class="cal-arrow" id="prevMonth" aria-label="Previous month">‹</button><strong id="monthTitle">October 2026</strong><button class="cal-arrow" id="nextMonth" aria-label="Next month">›</button></div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </section>
+    <section class="widget" id="recentWidget">
+      <h3 class="widget-title"><span>📖 &nbsp;Recent Entries</span><button id="viewAllBtn">View all →</button></h3>
+      <div id="recentEntries" class="entry-list"><p class="empty-recent">Your story starts here. Save your first entry on the book page.</p></div>
+    </section>
+    <section class="widget">
+      <h3 class="widget-title">✦ &nbsp;A little reminder</h3>
+      <p style="font:21px/1.35 'Caveat';color:#caa08c;margin:0">You don't have to have it all figured out. Just keep turning the page. ♡</p>
+    </section>
+  </aside>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const STORAGE_KEY='myDiaryCartoonEntries_v1', TRASH_KEY='myDiaryCartoonTrash_v1';
+let entries=read(STORAGE_KEY,{}), trash=read(TRASH_KEY,{}), selectedMood='', attachedPhoto='', currentView='home', calendarDate=new Date(), currentFavorite=false;
+const todayKey=keyOf(new Date());
+function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback}catch(e){return fallback}}
+function keyOf(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function parseKey(k){const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)}
+function prettyDate(k,includeDay=true){const d=parseKey(k);return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',...(includeDay?{weekday:'short'}:{})})}
+function persist(){localStorage.setItem(STORAGE_KEY,JSON.stringify(entries));localStorage.setItem(TRASH_KEY,JSON.stringify(trash))}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function setDateLabel(k){const d=parseKey(k);$('dateLabel').textContent=k===keyOf(new Date())?'Today,':d.toLocaleDateString('en-US',{weekday:'short'})+','}
+function loadEntry(k){$('entryDate').value=k;setDateLabel(k);const e=entries[k];$('entryTitle').value=e?.title||'';$('entryText').value=e?.text||'';selectedMood=e?.mood||'';attachedPhoto=e?.photo||'';currentFavorite=!!e?.favorite;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.toggle('selected',b.dataset.mood===selectedMood));$('favoriteBtn').textContent=currentFavorite?'♥':'♡';$('photoPreview').classList.toggle('hidden',!attachedPhoto);$('photoPreview').innerHTML=attachedPhoto?`<img src="${attachedPhoto}" alt="Attached memory" style="max-width:120px;max-height:85px;object-fit:cover;border-radius:8px;vertical-align:middle"> <button class="small-btn" id="removePhoto">Remove photo</button>`:'';if($('removePhoto'))$('removePhoto').onclick=()=>{attachedPhoto='';$('photoPreview').classList.add('hidden')};renderCalendar();renderRecent()}
+function saveEntry(){const k=$('entryDate').value||todayKey,title=$('entryTitle').value.trim(),text=$('entryText').value.trim();if(!title&&!text&&!attachedPhoto){toast('Write a little something before saving ♡');return}entries[k]={title:title||'A little moment',text,mood:selectedMood,photo:attachedPhoto,favorite:currentFavorite,updatedAt:new Date().toISOString()};persist();loadEntry(k);renderRecent();renderCalendar();toast('Your diary page is saved ♥')}
+function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth();$('monthTitle').textContent=calendarDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});const first=new Date(y,m,1).getDay(),count=new Date(y,m+1,0).getDate();let h=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('');for(let i=0;i<first;i++)h+='<div></div>';for(let d=1;d<=count;d++){const k=keyOf(new Date(y,m,d)),classes=['day'];if(k===todayKey)classes.push('today');if(k===$('entryDate').value)classes.push('selected');if(entries[k])classes.push('has-entry');h+=`<button class="${classes.join(' ')}" data-date="${k}" title="${entries[k]?'Entry saved':''}">${d}</button>`}$('calendarGrid').innerHTML=h;$('calendarGrid').querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>{loadEntry(b.dataset.date);showView('home')})}
+function renderRecent(){const list=Object.keys(entries).sort((a,b)=>b.localeCompare(a)).slice(0,5);$('recentEntries').innerHTML=list.length?list.map(k=>`<div class="entry-item" data-open="${k}"><span class="entry-dot"></span><div style="min-width:0;flex:1"><strong>${prettyDate(k,false)} ${entries[k].mood||''}</strong><p>${escapeHtml(entries[k].title||entries[k].text||'A little moment')}</p></div><span style="color:#6f626a">›</span></div>`).join(''):'<p class="empty-recent">Your story starts here. Save your first entry on the book page.</p>';$('recentEntries').querySelectorAll('[data-open]').forEach(el=>el.onclick=()=>{loadEntry(el.dataset.open);showView('home')})}
+function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showView(view){currentView=view;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));$('homeView').classList.toggle('hidden',view!=='home');$('listView').classList.toggle('active',view!=='home');$('listView').style.display=view==='home'?'none':'block';$('calendarWidget').classList.toggle('hidden',view==='memories'||view==='trash');$('recentWidget').classList.toggle('hidden',view==='memories'||view==='trash');const names={entries:'My Entries',favorites:'Favorite Pages',memories:'My Memories',trash:'Diary Trash',calendar:'Calendar'};$('listHeading').textContent=names[view]||'My Entries';renderList(view)}
+function renderList(view){let keys=Object.keys(entries).sort((a,b)=>b.localeCompare(a));if(view==='favorites')keys=keys.filter(k=>entries[k].favorite);if(view==='memories')keys=keys.filter(k=>entries[k].photo);if(view==='trash')keys=Object.keys(trash).sort((a,b)=>b.localeCompare(a));if(view==='calendar')keys=keys.filter(k=>k.startsWith(`${calendarDate.getFullYear()}-${String(calendarDate.getMonth()+1).padStart(2,'0')}`));$('entriesList').innerHTML=keys.length?keys.map(k=>{const e=(view==='trash'?trash:entries)[k];return `<article class="list-entry"><h3>${escapeHtml(e.title||'A little moment')} ${e.mood||''}</h3><p>${prettyDate(k)} · ${escapeHtml((e.text||'Photo memory').slice(0,140))}</p>${e.photo?`<img src="${e.photo}" alt="Diary memory" style="margin-top:10px;max-width:180px;max-height:130px;border-radius:10px;display:block">`:''}<div class="list-actions"><button class="small-btn" data-edit="${k}" ${view==='trash'?'disabled':''}>Open / Edit</button>${view==='trash'?`<button class="small-btn" data-restore="${k}">Restore</button><button class="small-btn" data-purge="${k}">Delete forever</button>`:`<button class="small-btn" data-fav="${k}">${e.favorite?'♥ Unfavorite':'♡ Favorite'}</button><button class="small-btn" data-delete="${k}">Move to trash</button>`}</div></article>`}).join(''):`<div class="widget"><p style="color:#b7a6a5">${view==='favorites'?'No favorite pages yet. Tap ♡ while writing to save a page here.':view==='memories'?'Photo memories you attach to diary entries will appear here.':view==='trash'?'Your trash is empty.':'No diary pages here yet. Start writing your first entry ♥'}</p><button class="save-btn" onclick="showView('home')">Write a page ♥</button></div>`;
+$('entriesList').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{loadEntry(b.dataset.edit);showView('home')});$('entriesList').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{trash[b.dataset.delete]=entries[b.dataset.delete];delete entries[b.dataset.delete];persist();renderList(view);renderCalendar();renderRecent();toast('Moved to trash')});$('entriesList').querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>{entries[b.dataset.fav].favorite=!entries[b.dataset.fav].favorite;persist();renderList(view);loadEntry($('entryDate').value);toast('Favorites updated')});$('entriesList').querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{entries[b.dataset.restore]=trash[b.dataset.restore];delete trash[b.dataset.restore];persist();renderList(view);renderCalendar();renderRecent();toast('Page restored ♥')});$('entriesList').querySelectorAll('[data-purge]').forEach(b=>b.onclick=()=>{if(confirm('Permanently delete this diary page?')){delete trash[b.dataset.purge];persist();renderList(view)}})}
+document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>showView(b.dataset.view));
+$('entryDate').addEventListener('change',()=>loadEntry($('entryDate').value||todayKey));
+$('saveBtn').onclick=saveEntry;
+document.querySelectorAll('.mood-btn').forEach(b=>b.onclick=()=>{selectedMood=selectedMood===b.dataset.mood?'':b.dataset.mood;document.querySelectorAll('.mood-btn').forEach(x=>x.classList.toggle('selected',x.dataset.mood===selectedMood))});
+$('favoriteBtn').onclick=()=>{currentFavorite=!currentFavorite;$('favoriteBtn').textContent=currentFavorite?'♥':'♡';toast(currentFavorite?'Marked as a favorite ♥':'Removed from favorites')};
+$('photoBtn').onclick=()=>$('photoInput').click();
+$('photoInput').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){toast('Please choose a photo under 2 MB');return}const r=new FileReader();r.onload=()=>{attachedPhoto=r.result;$('photoPreview').classList.remove('hidden');$('photoPreview').innerHTML=`<img src="${attachedPhoto}" alt="Attached memory" style="max-width:120px;max-height:85px;object-fit:cover;border-radius:8px;vertical-align:middle"> <button class="small-btn" id="removePhoto">Remove photo</button>`;$('removePhoto').onclick=()=>{attachedPhoto='';$('photoPreview').classList.add('hidden')}};r.readAsDataURL(f);e.target.value=''};
+const prompts=['What made you smile today?','What do you need to let go of?','Write a letter to your future self.','What is one tiny thing you are grateful for?','What would make tomorrow feel softer?','Describe a moment you want to remember.'];
+$('promptBtn').onclick=()=>{const p=prompts[Math.floor(Math.random()*prompts.length)];$('entryText').value+=($('entryText').value?'\n\n':'')+p+'\n';$('entryText').focus()};
+$('prevMonth').onclick=()=>{calendarDate.setMonth(calendarDate.getMonth()-1);renderCalendar();if(currentView==='calendar')renderList('calendar')};
+$('nextMonth').onclick=()=>{calendarDate.setMonth(calendarDate.getMonth()+1);renderCalendar();if(currentView==='calendar')renderList('calendar')};
+$('viewAllBtn').onclick=()=>showView('entries');
+$('settingsBtn').onclick=()=>alert('Your diary entries are saved in this browser on this device. Use your browser storage carefully, and export or back up important memories separately.');
+$('themeBtn').onclick=()=>{document.body.classList.toggle('soft-night');const on=document.body.classList.contains('soft-night');document.body.style.background=on?'radial-gradient(ellipse at 50% 110%,#493047 0%,#201b2a 55%,#17151f 100%)':'';$('themeBtn').textContent=on?'☀':'☾'};
+$('entryDate').value=todayKey;calendarDate=new Date();renderCalendar();loadEntry(todayKey);renderRecent();showView('home');
+</script>
+</body>
+</html>
